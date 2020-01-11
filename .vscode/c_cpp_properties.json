@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux_Cross",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "~/cross/bin/x86_64-elf-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64",
+            "compilerArgs": [
+                "-ffreestanding",
+                "-O2",
+                "-mno-red-zone",
+                "-fno-exceptions",
+                "-fno-rtti"
+            ]
+        }
+    ],
+    "version": 4
+}
