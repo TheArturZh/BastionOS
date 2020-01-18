@@ -1,5 +1,4 @@
-%ifdef GDT_DEFINES_
-%else
+%ifndef GDT_DEFINES_
 
 %define GDT_DEFINES_
 

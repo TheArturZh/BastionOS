@@ -26,6 +26,6 @@ gdt64:
 	db 0x0F
 	db 0          ;Base again
 
-    .pointer:
-    dw .pointer - gdt64 - 1
-    dq gdt64
+	.pointer:
+	dw .pointer - gdt64 - 1
+	dq gdt64
