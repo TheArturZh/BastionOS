@@ -8,7 +8,7 @@ gdt64:
 
 	.code: equ $ - gdt64
 	dw 0xffffffff ;Limit
-    dw 0          ;Base
+	dw 0          ;Base
 	db 0          ;Also base
 	;Access byte
 	db 0    | GDT_ACCESS_PRESENT | GDT_ACCESS_DESC_TYPE_DATA | GDT_ACCESS_EXECUTABLE | GDT_ACCESS_RW
@@ -18,7 +18,7 @@ gdt64:
 
 	.data: equ $ - gdt64
 	dw 0xffffffff ;Limit
-    dw 0          ;Base
+	dw 0          ;Base
 	db 0          ;Also base
 	;Access byte
 	db 0    | GDT_ACCESS_PRESENT | GDT_ACCESS_DESC_TYPE_DATA | GDT_ACCESS_RW

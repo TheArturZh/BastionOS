@@ -112,11 +112,13 @@ bits 64
 enter64:
 	cli
 
-	;test
-	mov ebx, 0xb8000
-	mov ah, 0x0F
-	mov al, "O"
-	mov word [ebx], ax
+	;set segment registers to data descriptor
+	mov ax, gdt64.data
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+	mov ss, ax
 
 	extern kmain
 	call kmain
