@@ -95,8 +95,10 @@ _start:
 
 	;IA-32
 	call enable_lm
-	;IA-32e
+	;IA-32e.
 
+	;Now in order to leave compatibily mode
+	;we need to jump into segment with L flag set in descriptor
 	jmp gdt64.code:(enter64 - KERNEL_VMA)
 .hang:
 	hlt
