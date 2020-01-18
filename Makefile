@@ -1,4 +1,4 @@
-EMULATOR = qemu-system-x86_64 -cdrom
+EMULATOR = qemu-system-x86_64 -monitor stdio -cdrom
 
 CPP_COMP = x86_64-elf-gcc
 ASSEMBLER = nasm
@@ -12,7 +12,7 @@ ASFLAGS = -f elf64 -w+orphan-labels
 BUILD_PATH = ./build/
 
 Objects = boot.o multiboot2_header.o kernel.o
-image = os.iso
+image_name = os.iso
 
 %.o: %.s
 	$(ASSEMBLER) $(ASFLAGS) -o $(BUILD_PATH)$@ $<
@@ -26,13 +26,13 @@ build_dir:
 kernel.bin: build_dir $(Objects)
 	cd $(BUILD_PATH) && $(LINKER) $(LFLAGS) -n -T ../linker.ld -o $@ $(Objects)
 
-$(image): kernel.bin
+image: kernel.bin
 	cp -r ./image $(BUILD_PATH)image
 	mv $(BUILD_PATH)kernel.bin $(BUILD_PATH)image/boot/kernel.bin
-	grub-mkrescue -o $(BUILD_PATH)$@ $(BUILD_PATH)image
+	grub-mkrescue -o $(BUILD_PATH)$(image_name) $(BUILD_PATH)image
 
 clean:
 	rm -rf $(BUILD_PATH)
 
-run: $(image)
-	$(EMULATOR) $(BUILD_PATH)$(image)
+run: image
+	$(EMULATOR) $(BUILD_PATH)$(image_name)

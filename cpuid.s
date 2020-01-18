@@ -1,5 +1,3 @@
-[bits 32]
-
 ;Checks if CPUID is available
 ;[INPUT:] None
 ;[USED:]

@@ -1,7 +1,12 @@
+[CPU x64]
+
+STACK_SIZE equ 16 * 1024
+
 %include "print_32.s"
 %include "cpuid.s"
-
-STACK_SIZE equ 16*1024
+%include "init_paging.s"
+%include "init_defines.s"
+%include "gdt64.s"
 
 MESSAGE_ERROR_NO_MULTIBOOT2:
 	db "ERR 0: The kernel have to be loaded using multiboot2", 0
@@ -31,28 +36,48 @@ multiboot2_check:
 	pusha
 	cmp eax, 0x36D76289
 	je .end
-	mov ebx, MESSAGE_ERROR_NO_MULTIBOOT2
-	call print_32_s
+	mov ebx, (MESSAGE_ERROR_NO_MULTIBOOT2 - KERNEL_VMA)
+	call print_32
 	jmp _start.hang
 .end:
 	popa
 	ret
 
 no_cpuid_error:
-	mov ebx, MESSAGE_ERROR_NO_CPUID
-	call print_32_s
+	mov ebx, (MESSAGE_ERROR_NO_CPUID - KERNEL_VMA)
+	call print_32
 	jmp _start.hang
 
 no_long_mode_error:
-	mov ebx, MESSAGE_ERROR_NO_LONG_MODE
-	call print_32_s
+	mov ebx, (MESSAGE_ERROR_NO_LONG_MODE - KERNEL_VMA)
+	call print_32
 	jmp _start.hang
+
+enable_lm:
+	;Enable PAE
+	mov eax, cr4
+	or eax, 1 << 5
+	mov cr4, eax
+
+	;Set the LM-bit
+	mov ecx, 0xC0000080
+	rdmsr
+	or eax, 1 << 8
+	or eax, 101b
+	wrmsr
+
+	;Enable paging
+	mov eax, cr0
+	or eax, 1 << 31
+	mov cr0, eax
+
+	ret
 
 global _start:function (_start.end - _start)
 _start:
 	cli
-	mov esp, stack_top
-	mov ebp, stack_top
+	mov esp, (stack_top - KERNEL_VMA)
+	mov ebp, esp
 
 	call multiboot2_check
 
@@ -64,18 +89,35 @@ _start:
 	cmp eax, 1
 	jne no_long_mode_error
 
-	;extern kmain
-	;call kmain
+	call setup_paging
 
-	;some tests
-	mov ebx, MESSAGE_TEST
-	call print_32_s
+	lgdt [gdt64.pointer - KERNEL_VMA]
 
-	mov ebx, 0xFF
-	call write_bin_32_s
-	call cond_newline_32
-	call write_hex_32_s
+	;IA-32
+	call enable_lm
+	;IA-32e
+
+	jmp gdt64.code:(enter64 - KERNEL_VMA)
 .hang:
 	hlt
 	jmp .hang
 .end:
+
+
+section .text
+bits 64
+
+enter64:
+	cli
+
+	;test
+	mov ebx, 0xb8000
+	mov ah, 0x0F
+	mov al, "O"
+	mov word [ebx], ax
+
+	extern kmain
+	call kmain
+.hang:
+	hlt
+	jmp .hang

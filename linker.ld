@@ -1,42 +1,43 @@
 OUTPUT_FORMAT("elf64-x86-64")
 
 KERNEL_LMA = 0x0000000000100000; /* 1MiB */
-KERNEL_VMA = 0xffff800000000000 + KERNEL_LMA; /* Higher Half */
+KERNEL_VMA = 0xffffff0000000000 + KERNEL_LMA; /* Higher Half */
+VOFF = 0xffffff0000000000;
 
 ENTRY (_start)
 
 SECTIONS
 {
-	. = KERNEL_LMA;
-    kernel_start = .;
+	. = KERNEL_VMA;
+    _kernel_start = .;
 
-	.multiboot :
+	.multiboot : AT(ADDR(.multiboot) - VOFF)
 	{
 		*(.multiboot2_header)
 	}
 
-	.text :
+	.text : AT(ADDR(.text) - VOFF)
 	{
 		*(.text)
 	}
 
-    .rodata :
+    .rodata : AT(ADDR(.rodata) - VOFF)
     {
         *(.rodata)
     }
 
-    .data :
+    .data : AT(ADDR(.data) - VOFF)
     {
         *(.data)
     }
 
-    .bss :
+    .bss : AT(ADDR(.bss) - VOFF)
     {
         *(COMMON)
         *(.bss)
     }
 
-    kernel_end = .;
+    _kernel_end = .;
 
     /DISCARD/ :
     {
