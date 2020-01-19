@@ -26,7 +26,7 @@ setup_paging:
 	;Linking tables together
 	mov edx, (PML4T - KERNEL_VMA + (510 * 8)) ;Phys address of 510th entry in PML4T.
 	                                          ;It gives 512 GiB of memory for kernel space.
-											  ;511th entry is for recursive paging.
+	                                          ;511th entry is for recursive paging.
 	mov ebx, (PDPT - KERNEL_VMA + 3)
 	mov dword [edx], ebx
 
