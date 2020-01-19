@@ -10,8 +10,8 @@ bits 32
 multiboot2_header_start:
 	dd MULTIBOOT2_MAGIC
 	dd MULTIBOOT2_ARCH
-    dd MULTIBOOT2_HEADER_SIZE
-    dd MULTIBOOT2_CHECKSUM
+	dd MULTIBOOT2_HEADER_SIZE
+	dd MULTIBOOT2_CHECKSUM
 
 	;Terminate tag
 	dw 0x0

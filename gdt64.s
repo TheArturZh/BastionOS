@@ -4,7 +4,7 @@ section .rodata
 align 16
 gdt64:
 	;NULL
-    dq 0
+	dq 0
 
 	.code: equ $ - gdt64
 	dw 0xffffffff ;Limit
