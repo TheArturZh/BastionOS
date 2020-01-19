@@ -5,7 +5,7 @@ ASSEMBLER = nasm
 LINKER = x86_64-elf-gcc
 
 CFLAGS  = -ffreestanding -O2 -mno-red-zone -fno-exceptions -fno-rtti
-LFLAGS  = -ffreestanding -O2 -nostdlib
+LFLAGS  = -ffreestanding -O2 -nostdlib -lgcc
 ASFLAGS = -f elf64 -w+orphan-labels
 
 #should end with "/"
