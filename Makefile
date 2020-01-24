@@ -1,5 +1,5 @@
 #Emulators
-QEMU  = qemu-system-x86_64 -d cpu_reset -monitor stdio -cdrom
+QEMU  = qemu-system-x86_64 -monitor stdio -cdrom
 BOCHS = ~/bochs-os/bin/bochs
 
 #GCC or G++
@@ -9,11 +9,11 @@ ASSEMBLER = nasm
 LINKER    = x86_64-elf-gcc
 
 #Compiler flags
-CFLAGS  = -ffreestanding -O2 -mno-red-zone -fno-exceptions -fno-rtti
+CFLAGS  = -ffreestanding -O2 -mno-red-zone -fno-exceptions -fno-rtti -mcmodel=large
 #Assembler flags
 ASFLAGS = -f elf64 -w+orphan-labels
 #Linker flags
-LFLAGS  = -ffreestanding -O2 -nostdlib -lgcc
+LFLAGS  = -ffreestanding -O2 -nostdlib -lgcc -mcmodel=large
 
 #should end with "/"
 BUILD_PATH = ./build/
