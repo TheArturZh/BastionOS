@@ -1,0 +1,8 @@
+mouse: enabled = 1
+megs: 128
+ata0-master: type=cdrom, path=./build/os.iso, status=inserted
+log: os_bochs.log
+boot: cdrom
+magic_break: enabled=1
+cpu: reset_on_triple_fault=0
+cpuid: level=6, x86_64=1

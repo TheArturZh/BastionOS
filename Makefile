@@ -1,12 +1,19 @@
-EMULATOR = qemu-system-x86_64 -monitor stdio -cdrom
+#Emulators
+QEMU  = qemu-system-x86_64 -d cpu_reset -monitor stdio -cdrom
+BOCHS = ~/bochs-os/bin/bochs
 
-CPP_COMP = x86_64-elf-gcc
+#GCC or G++
+CPP_COMP  = x86_64-elf-gcc
+#NASM assembler
 ASSEMBLER = nasm
-LINKER = x86_64-elf-gcc
+LINKER    = x86_64-elf-gcc
 
+#Compiler flags
 CFLAGS  = -ffreestanding -O2 -mno-red-zone -fno-exceptions -fno-rtti
-LFLAGS  = -ffreestanding -O2 -nostdlib -lgcc
+#Assembler flags
 ASFLAGS = -f elf64 -w+orphan-labels
+#Linker flags
+LFLAGS  = -ffreestanding -O2 -nostdlib -lgcc
 
 #should end with "/"
 BUILD_PATH = ./build/
@@ -34,5 +41,10 @@ image: kernel.bin
 clean:
 	rm -rf $(BUILD_PATH)
 
-run: image
-	$(EMULATOR) $(BUILD_PATH)$(image_name)
+bochs:
+	$(BOCHS)
+
+qemu:
+	$(QEMU) $(BUILD_PATH)$(image_name)
+
+run: qemu
