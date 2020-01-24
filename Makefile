@@ -47,4 +47,4 @@ bochs:
 qemu:
 	$(QEMU) $(BUILD_PATH)$(image_name)
 
-run: qemu
+run: image qemu
