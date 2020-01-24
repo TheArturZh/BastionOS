@@ -4,7 +4,7 @@
 
 ;Access byte
 %define GDT_ACCESS_PRESENT        (1 << 7)
-%define GDT_ACCESS_DESC_TYPE_DATA (1 << 4)
+%define GDT_ACCESS_TYPE_DATA_CODE (1 << 4)
 %define GDT_ACCESS_EXECUTABLE     (1 << 3)
 %define GDT_ACCESS_DIRECTION      (1 << 2)
 %define GDT_ACCESS_RW             (1 << 1)

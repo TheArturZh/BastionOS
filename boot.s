@@ -17,9 +17,6 @@ MESSAGE_ERROR_NO_CPUID:
 MESSAGE_ERROR_NO_LONG_MODE:
 	db "ERR 2: The CPU does not support long mode", 0
 
-MESSAGE_TEST:
-	db "Hello, World!", 0
-
 
 section .bss
 bits 32
@@ -36,20 +33,19 @@ multiboot2_check:
 	pusha
 	cmp eax, 0x36D76289
 	je .end
+
 	mov ebx, (MESSAGE_ERROR_NO_MULTIBOOT2 - KERNEL_VMA)
-	call print_32
-	jmp _start.hang
+	jmp error_out
 .end:
 	popa
 	ret
 
 no_cpuid_error:
 	mov ebx, (MESSAGE_ERROR_NO_CPUID - KERNEL_VMA)
-	call print_32
-	jmp _start.hang
-
+	jmp error_out
 no_long_mode_error:
 	mov ebx, (MESSAGE_ERROR_NO_LONG_MODE - KERNEL_VMA)
+error_out:
 	call print_32
 	jmp _start.hang
 
@@ -59,13 +55,15 @@ enable_lm:
 	or eax, 1 << 5
 	mov cr4, eax
 
-	;Set the LM-bit
+	;Enable long mode
 	mov ecx, 0xC0000080
 	rdmsr
 	or eax, 1 << 8
-	or eax, 101b
 	wrmsr
 
+	ret
+
+enable_paging:
 	;Enable paging
 	mov eax, cr0
 	or eax, 1 << 31
@@ -89,17 +87,25 @@ _start:
 	cmp eax, 1
 	jne no_long_mode_error
 
-	call setup_paging
-
 	lgdt [gdt64.pointer - KERNEL_VMA]
 
-	;IA-32
-	call enable_lm
-	;IA-32e.
+	;GDT flush
+	mov ax, gdt64.data
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+	mov ss, ax
+	jmp gdt64.code32:(.cs_jmp - KERNEL_VMA)
+	.cs_jmp:
 
-	;Now in order to leave compatibily mode
-	;we need to jump into segment with L flag set in descriptor
-	jmp gdt64.code:(enter64 - KERNEL_VMA)
+	call setup_paging
+
+	call enable_lm
+
+	call enable_paging
+
+	jmp gdt64.code64:(enter64 - KERNEL_VMA)
 .hang:
 	hlt
 	jmp .hang
@@ -110,18 +116,15 @@ section .text
 bits 64
 
 enter64:
-	cli
+	mov rax, jump_to_higher_half
+	jmp rax
+	jump_to_higher_half:
 
-	;set segment registers to data descriptor
-	mov ax, gdt64.data
-	mov ds, ax
-	mov es, ax
-	mov fs, ax
-	mov gs, ax
-	mov ss, ax
+	call remap_lower
 
 	extern kmain
 	call kmain
 .hang:
+	cli
 	hlt
 	jmp .hang
