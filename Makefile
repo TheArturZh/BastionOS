@@ -18,7 +18,7 @@ LFLAGS  = -ffreestanding -O2 -nostdlib -lgcc -mcmodel=large
 #should end with "/"
 BUILD_PATH = ./build/
 
-Objects = boot.o multiboot2_header.o kernel.o
+Objects = boot.o multiboot2_header.o kernel.o terminal.o vga.o
 image_name = os.iso
 
 %.o: %.s
