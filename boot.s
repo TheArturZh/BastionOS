@@ -29,6 +29,7 @@ stack_top:
 section .text
 bits 32
 
+;This function checks if this kernel was loaded using multiboot2.
 multiboot2_check:
 	pusha
 	cmp eax, 0x36D76289
@@ -64,7 +65,6 @@ enable_lm:
 	ret
 
 enable_paging:
-	;Enable paging
 	mov eax, cr0
 	or eax, 1 << 31
 	mov cr0, eax
@@ -107,6 +107,7 @@ _start:
 
 	jmp gdt64.code64:(enter64 - KERNEL_VMA)
 .hang:
+	;Should not happen
 	hlt
 	jmp .hang
 .end:
@@ -116,10 +117,13 @@ section .text
 bits 64
 
 enter64:
-	mov rax, jump_to_higher_half
+	;We are still in lower half,
+	;so we need an absolute jump to higher half
+	mov rax, .jump_to_higher_half
 	jmp rax
-	jump_to_higher_half:
+	.jump_to_higher_half:
 
+	;Remove kernel from lower half
 	call remap_lower
 
 	extern kmain
