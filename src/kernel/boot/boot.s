@@ -2,11 +2,11 @@
 
 STACK_SIZE equ 16 * 1024
 
-%include "print_32.s"
-%include "cpuid.s"
-%include "init_paging.s"
-%include "init_defines.s"
-%include "gdt64.s"
+%include "./src/kernel/boot/print_32.s"
+%include "./src/kernel/boot/cpuid.s"
+%include "./src/kernel/boot/init_paging.s"
+%include "./src/kernel/boot/init_defines.s"
+%include "./src/kernel/gdt64.s"
 
 MESSAGE_ERROR_NO_MULTIBOOT2:
 	db "ERR 0: The kernel have to be loaded using multiboot2", 0

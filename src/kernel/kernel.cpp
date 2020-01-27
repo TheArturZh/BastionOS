@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include "vga.h"
-#include "terminal.h"
+#include "vga/vga.h"
+#include "vga/terminal.h"
 
 extern "C" void kmain(void){
 	//another one test
@@ -37,7 +37,7 @@ extern "C" void kmain(void){
 
 
 	test_terminal.setTextColor((unsigned char) vga::COLOR::WHITE);
-	test_terminal.write("                                                                 Hello, world.\n");
+	test_terminal.write("                                                            Feels bad, man.\n");
 
 	test_terminal.setCursorPos(35,7);
 	test_terminal.write("@@@@@@@@@@@@@");

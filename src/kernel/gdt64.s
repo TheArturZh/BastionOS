@@ -1,4 +1,4 @@
-%include "gdt_defines.s"
+%include "./src/kernel/gdt_defines.s"
 
 section .data
 align 16

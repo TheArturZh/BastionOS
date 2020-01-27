@@ -1,4 +1,4 @@
-%include "init_defines.s"
+%include "./src/kernel/boot/init_defines.s"
 
 section .bss
 align 4096
