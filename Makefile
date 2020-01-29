@@ -2,11 +2,12 @@
 QEMU  = qemu-system-x86_64 -monitor stdio -cdrom
 BOCHS = ~/bochs-os/bin/bochs
 
-#GCC or G++
-CXX = x86_64-elf-gcc
-#NASM assembler
+#GCC or G++ (must be a cross-compiler)
+CXX = build-tools/bin/x86_64-elf-gcc
+#NASM assembler (you can install one from ubuntu reps)
 ASSEMBLER = nasm
-LINKER    = x86_64-elf-gcc
+#GCC is recommended
+LINKER    = build-tools/bin/x86_64-elf-gcc
 
 #Compiler flags
 CXXFLAGS  = -ffreestanding -O2 -mno-red-zone -fno-exceptions -fno-rtti -mcmodel=large
@@ -44,7 +45,7 @@ build_dir:
 	mkdir $(KERNEL_BUILD_PATH) || true
 
 $(KERNEL_BUILD_PATH)kernel.bin: build_dir $(Objects)
-	cd $(KERNEL_BUILD_PATH) && $(LINKER) $(LFLAGS) -n -T ../../src/kernel/linker.ld -o kernel.bin $(Objects)
+	cd $(KERNEL_BUILD_PATH) && ../../$(LINKER) $(LFLAGS) -n -T ../../src/kernel/linker.ld -o kernel.bin $(Objects)
 
 $(image): $(KERNEL_BUILD_PATH)kernel.bin
 	mkdir $(BUILD_PATH)image || true
@@ -52,6 +53,8 @@ $(image): $(KERNEL_BUILD_PATH)kernel.bin
 	cp -r ./boot/grub $(BUILD_PATH)image/boot/
 	cp $(KERNEL_BUILD_PATH)kernel.bin $(BUILD_PATH)image/boot/kernel.bin
 	grub-mkrescue -o $(image) $(BUILD_PATH)image
+
+kernel: $(KERNEL_BUILD_PATH)kernel.bin
 
 clean:
 	rm -rf $(BUILD_PATH)
