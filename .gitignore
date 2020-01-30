@@ -1,7 +1,13 @@
 build
 build/*
+build-tools
+
 *.swp
 *.o
 *.log
 *.iso
-build-tools
+
+.directory
+.nfs*
+Thumbs.db
+[Dd]esktop.ini
