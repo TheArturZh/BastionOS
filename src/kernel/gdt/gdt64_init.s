@@ -1,7 +1,8 @@
-%include "./src/kernel/gdt_defines.s"
+%include "./src/kernel/gdt/gdt_defines.s"
 
 section .data
 align 16
+global gdt64:data
 gdt64:
 	;NULL
 	dq 0
