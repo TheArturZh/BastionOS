@@ -2,7 +2,7 @@
 
 STACK_SIZE equ 16 * 1024
 
-%include "./src/kernel/boot/print_32.s"
+%include "./src/kernel/vga/print.s"
 %include "./src/kernel/boot/cpuid.s"
 %include "./src/kernel/boot/init_paging.s"
 %include "./src/kernel/boot/init_defines.s"
