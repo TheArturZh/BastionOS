@@ -3,10 +3,14 @@
 #include <stdint.h>
 #include "vga/vga.h"
 #include "vga/terminal.h"
+#include "interrupts/idt.h"
 
 extern "C" void kmain(void){
 	//another one test
 	Terminal test_terminal;
+
+	idt::setup_exceptions();
+	idt::load_idt();
 
 	//print pepe
 	test_terminal.setBackgroundColor((unsigned char) vga::COLOR::BLACK);

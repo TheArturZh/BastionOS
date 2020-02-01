@@ -22,7 +22,7 @@ SRC_FILES = $(wildcard $(SRC_DIRS_ROOT)/*) \
             $(wildcard $(SRC_DIRS_ROOT)/*/*/*)
 SRC_DIRS = $(dir $(SRC_FILES))
 
-Objects = boot.o vga.o terminal.o kernel.o multiboot2_header.o
+Objects = boot.o vga.o terminal.o kernel.o multiboot2_header.o idt64_define.o idt.o
 
 #<BUILD DIRECTORIES>#
 #should end with "/"
