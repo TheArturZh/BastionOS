@@ -1,4 +1,5 @@
 #include "idt.h"
+#include "../gdt/gdt.h"
 
 extern "C" void isr_divide_by_zero();
 extern "C" void isr_double_fault();
@@ -8,7 +9,7 @@ extern "C" void isr_page_fault();
 static idt::IDT_entry exception_entry(uintptr_t isr_ptr){
 	return idt::IDT_entry {
 		(uint16_t) isr_ptr,
-		0x10, //64bit code segment selector
+		gdt::segments::code64, //64bit code segment selector
 		0,
 		0b10001110, //Present flag + 32bit interrupt gate type
 		(uint16_t) (isr_ptr >> 16),
