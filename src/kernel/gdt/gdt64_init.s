@@ -2,7 +2,7 @@
 
 section .data
 align 16
-global gdt64:data
+
 gdt64:
 	;NULL
 	dq 0
