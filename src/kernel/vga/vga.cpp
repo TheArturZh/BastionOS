@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include "vga.h"
 
-const int VGA_MEM_ADDR = 0x0b8000;
+const uintptr_t VGA_MEM_ADDR = 0x0b8000;
 
 void vga::put_character(unsigned char color, unsigned char character, unsigned short pos){
 	if(character == 0)
