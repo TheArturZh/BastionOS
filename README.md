@@ -15,12 +15,17 @@ It was never built on Windows, so I can't give any instructions on that.
   
 To build BastionOS you'll need:
 
-- GNU Make ( `sudo apt install make` )
-- NASM ( `sudo apt install nasm` )
+- GNU Make (`sudo apt install make`)
+- NASM (`sudo apt install nasm`)
 - A GCC **cross-compiler** for x86_64-elf target
   - libgcc should be compiled with `-mno-red-zone` and `-mcmodel=large`
 
 **GCC and Binutils for x86_64-elf target can be downloaded [HERE](https://github.com/TheArturZh/BastionOS-Build-Tools/releases "Toolchain releases")**
+
+To be able to create an OS image using makefile you'll also need:
+
+- Xorriso (`sudo apt install xorriso`)
+- grub-mkrescue for GRUB2 (`sudo apt install grub2)`
 
 Built binutils, cross-compiler and it's libraries should be placed in `./build-tools` . You should have the following file structure:
 
