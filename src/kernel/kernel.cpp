@@ -4,13 +4,20 @@
 #include "vga/vga.h"
 #include "vga/terminal.h"
 #include "interrupts/idt.h"
+#include "interrupts/pic.h"
 
 extern "C" void kmain(void){
 	//another one test
 	Terminal test_terminal;
 
+	//Setup IDT
 	idt::setup_exceptions();
 	idt::load_idt();
+
+	//Disable the PIC
+	pic::remap(32,40);
+	pic::disable(MASTER_PIC_DATA);
+	pic::disable(SLAVE_PIC_DATA);
 
 	//print pepe
 	test_terminal.setBackgroundColor((unsigned char) vga::COLOR::BLACK);
