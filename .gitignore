@@ -7,6 +7,13 @@ build-tools
 *.log
 *.iso
 
+#Emacs
+*~
+\#*\#
+.\#*
+.projectile
+flycheck_*.el
+
 .directory
 .nfs*
 Thumbs.db
