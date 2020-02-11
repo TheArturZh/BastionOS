@@ -6,6 +6,15 @@ extern "C" void isr_double_fault();
 extern "C" void isr_gp_fault();
 extern "C" void isr_page_fault();
 
+/*idt::IDT_entry IDT[256];
+
+struct idt_pointer
+{
+	unsigned short size = sizeof(IDT);
+	uintptr_t pointer = (uintptr_t) &IDT;
+}__attribute__((packed));
+*/
+
 static idt::IDT_entry exception_entry(uintptr_t isr_ptr){
 	return idt::IDT_entry {
 		(uint16_t) isr_ptr,

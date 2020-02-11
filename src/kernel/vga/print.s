@@ -1,36 +1,15 @@
-%ifndef ASM_PRINT
-%define ASM_PRINT
+	;; This function is currently used for exception ISRs
+	;; just because i'm lazy to write them in C++
+
+%ifndef PRINT_ASM_
+%define PRINT_ASM_
 
 VID_MEM equ 0xb8000
 
 section .text
-bits 32
-
-;ebx is the pointer to the string
-print_32:
-	pusha
-	mov edx, VID_MEM
-	mov ah, 0x07
-.loop:
-	mov al, [ebx]
-
-	cmp al, 0
-	je .end
-
-	mov [edx], ax
-
-	add edx, 2
-	add ebx, 1
-
-	jmp .loop
-.end:
-	popa
-	ret
-
-section .text
 bits 64
 
-;rbx is the pointer to the string
+;; rbx is the pointer to the string
 print_64:
 	push rax
 	push rbx
@@ -59,5 +38,5 @@ print_64:
 	pop rax
 
 	ret
-
 %endif
+	

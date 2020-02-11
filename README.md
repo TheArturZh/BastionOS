@@ -25,7 +25,7 @@ To build BastionOS you'll need:
 To be able to create an OS image using makefile you'll also need:
 
 - Xorriso (`sudo apt install xorriso`)
-- grub-mkrescue for GRUB2 (`sudo apt install grub2)`
+- grub-mkrescue for GRUB2 (`sudo apt install grub2`)
 
 Built binutils, cross-compiler and it's libraries should be placed in `./build-tools` . You should have the following file structure:
 

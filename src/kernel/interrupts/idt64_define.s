@@ -1,4 +1,4 @@
-%include "./src/kernel/boot/init_defines.s"
+%include "./src/kernel/init_defines.s"
 %include "./src/kernel/interrupts/exception_handlers.s"
 
 global IDT:data
@@ -20,4 +20,4 @@ section .text
 
 	load_idt:
 		lidt [IDT_Pointer - KERNEL_VMA]
-		ret
+	ret
