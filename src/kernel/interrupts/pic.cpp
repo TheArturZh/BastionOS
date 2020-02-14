@@ -43,6 +43,7 @@ void pic::remap(int offset_master, int offset_slave){
 	return;
 }
 
-void pic::disable(unsigned short port){
+void pic::disable(unsigned short port){\
+	//Mask out all interrupts
 	outb(0xff, port);
 }
