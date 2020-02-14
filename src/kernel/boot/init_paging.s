@@ -73,9 +73,9 @@ map_kernel:
 	push edx ;"free" edx
 
 	;Mapping with 2MiB pages
-	mov edx, 0x200000
+	mov edx, KERNEL_LMA
 	mov ecx, 0
-	mov ebx, (PD - KERNEL_VMA + 8) ; + 8 because first (0) entry is already occupied
+	mov ebx, (PD - KERNEL_VMA + (KERNEL_LMA / 0x200000) * 8 ) ; + 8 because first (0) entry is already occupied
 	.huge_pages_loop:
 		cmp ecx, eax
 		je .hpl_end
