@@ -3,7 +3,7 @@
 STACK_SIZE equ 16 * 1024
 
 %include "./src/kernel/boot/print.s"
-%include "./src/kernel/boot/cpuid.s"
+%include "./src/kernel/boot/cpuid_init.s"
 %include "./src/kernel/boot/init_paging.s"
 %include "./src/kernel/init_defines.s"
 %include "./src/kernel/boot/gdt64_init.s"

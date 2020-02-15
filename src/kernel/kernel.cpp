@@ -5,6 +5,7 @@
 #include "vga/terminal.h"
 #include "interrupts/idt.h"
 #include "interrupts/pic.h"
+#include "cpuid/cpuid.h"
 
 extern "C" void kmain(void){
 	//another one test
