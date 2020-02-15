@@ -21,8 +21,8 @@ extern "C" void kmain(void){
 	pic::disable(SLAVE_PIC_DATA);
 
 	//print pepe
-	test_terminal.setBackgroundColor((unsigned char) vga::COLOR::BLACK);
-	test_terminal.setTextColor((unsigned char) vga::COLOR::GREEN);
+	test_terminal.setBackgroundColor(vga::COLOR::BLACK);
+	test_terminal.setTextColor(vga::COLOR::GREEN);
 	test_terminal.write("                          .(((//////////(((      ((((/////////.                 ");
 	test_terminal.write("                         ((////////////////(,   (///////////////                ");
 	test_terminal.write("                      (///////////////////////**/***************//              ");
@@ -48,7 +48,7 @@ extern "C" void kmain(void){
 	test_terminal.write("                         /////////////////////////////****                      ");
 
 
-	test_terminal.setTextColor((unsigned char) vga::COLOR::WHITE);
+	test_terminal.setTextColor(vga::COLOR::WHITE);
 	test_terminal.write("                                                            Feels bad, man.\n");
 
 	test_terminal.setCursorPos(35,7);
@@ -66,7 +66,7 @@ extern "C" void kmain(void){
 	test_terminal.setCursorPos(59,9);
 	test_terminal.write("&&&&&  &     &&");
 
-	test_terminal.setTextColor((unsigned char) vga::COLOR::LIGHT_RED);
+	test_terminal.setTextColor(vga::COLOR::LIGHT_RED);
 	test_terminal.setCursorPos(30,16);
 	test_terminal.write(".............");
 	test_terminal.setCursorPos(28,17);

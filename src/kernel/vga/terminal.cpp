@@ -2,11 +2,8 @@
 #include "vga.h"
 #include "terminal.h"
 
-unsigned char convert_color(unsigned char bgColor, unsigned char fgColor){
-	return (char) (bgColor << 4) + fgColor;
-}
-
-size_t strlen(const char* str){
+//TODO: It isn't supposed to be here, should be moved
+static size_t strlen(const char* str){
 	size_t len = 0;
 	while (str[len])
 		len++;
@@ -21,16 +18,17 @@ void Terminal::setCursorPos(unsigned short x, unsigned short y) {
 	cursorY = y;
 }
 
-void Terminal::setBackgroundColor(unsigned char color){
-	bgColor = color;
+void Terminal::setBackgroundColor(vga::COLOR bg_color){
+	color = color & 0x0F;
+	color += (char)bg_color << 4;
 }
 
-void Terminal::setTextColor(unsigned char color){
-	fgColor = color;
+void Terminal::setTextColor(vga::COLOR fg_color){
+	color = color & 0xF0;
+	color += (char)fg_color;
 }
 
 void Terminal::write(const char* str){
-	unsigned char color = convert_color(bgColor, fgColor);
 	size_t len = strlen(str);
 	for(size_t i = 0; i < len; i++){
 		if(str[i] == '\n'){
@@ -60,21 +58,18 @@ void Terminal::write(const char* str){
 void Terminal::scroll(int lines){
 	for(int done = 0; done < lines; done++){
 		vga::scroll(1);
-
-		unsigned char colors = convert_color(bgColor,fgColor);
 		unsigned short last_line_pos = (vga::VGA_HEIGHT - 1) * vga::VGA_WIDTH;
 		for (int character = 0; character < vga::VGA_WIDTH; character++){
-			vga::put_character(colors, ' ', last_line_pos + character);
+			vga::put_character(color, ' ', last_line_pos + character);
 		}
 	}
 }
 
 void Terminal::clear(){
-	unsigned char colors = convert_color(bgColor,fgColor);
 	unsigned int total_characters = vga::VGA_HEIGHT * vga::VGA_WIDTH;
 
 	for (unsigned int pos = 0; pos < total_characters; pos++){
-		vga::put_character(colors, ' ', pos);
+		vga::put_character(color, ' ', pos);
 	}
 
 	return;
