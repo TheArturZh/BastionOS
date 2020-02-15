@@ -5,8 +5,6 @@ class Terminal {
 	private:
 		unsigned short cursorX = 0;
 		unsigned short cursorY = 0;
-		unsigned char  bgColor = 0x0;
-		unsigned char  fgColor = 0xF;
 		unsigned char color = 0x0F;
 
 	public:
