@@ -1,7 +1,10 @@
 OUTPUT_FORMAT("elf64-x86-64")
 
+/* Should be also changed in init_defines.s */
 KERNEL_LMA      = 0x0000000001000000; /* 16MiB */
-HIGHER_HALF_LOC = 0xffffff0000000000; /* -1TB */
+HIGHER_HALF_LOC = 0xffffff0000000000; /* -1TB  */
+/* ---------------------------------------- */
+
 KERNEL_VMA      = HIGHER_HALF_LOC + KERNEL_LMA; /* Higher Half */
 
 ENTRY (_start)
