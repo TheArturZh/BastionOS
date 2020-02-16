@@ -212,14 +212,14 @@ namespace cpuid {
 	};
 
 	struct cpu_version_info_struct {
-		int Stepping_ID : 4;
-		int Model_ID : 4;
-		int Family_ID : 4;
-		int Processor_Type : 2;
-		int reserved : 2;
-		int Extended_Model_ID : 4;
-		int Extended_Family_ID : 8;
-		int reserved_2 : 4;
+		unsigned int Stepping_ID : 4;
+		unsigned int Model_ID : 4;
+		unsigned int Family_ID : 4;
+		unsigned int Processor_Type : 2;
+		unsigned int reserved : 2;
+		unsigned int Extended_Model_ID : 4;
+		unsigned int Extended_Family_ID : 8;
+		unsigned int reserved_2 : 4;
 	}__attribute__((packed));
 
 	int* call(int leaf_a, int leaf_c, int* where);
