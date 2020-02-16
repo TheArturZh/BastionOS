@@ -6,14 +6,17 @@ extern "C" void isr_double_fault();
 extern "C" void isr_gp_fault();
 extern "C" void isr_page_fault();
 
-/*idt::IDT_entry IDT[256];
+idt::IDT_entry idt::IDT[256];
 
-struct idt_pointer
+static struct idt_pointer_struct
 {
-	unsigned short size = sizeof(IDT);
-	uintptr_t pointer = (uintptr_t) &IDT;
-}__attribute__((packed));
-*/
+	unsigned short size = sizeof(idt::IDT);
+	idt::IDT_entry* pointer = &idt::IDT[0];
+}__attribute__((packed)) idt_pointer;
+
+void idt::load_idt(){
+	asm volatile("lidt %0" : : "m"(idt_pointer));
+}
 
 static idt::IDT_entry exception_entry(uintptr_t isr_ptr){
 	return idt::IDT_entry {

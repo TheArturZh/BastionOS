@@ -16,8 +16,8 @@ struct IDT_entry
 	uint32_t zero;
 };
 
-extern "C" IDT_entry IDT[256];
-extern "C" void load_idt();
+extern idt::IDT_entry IDT[256];
+void load_idt();
 
 void setup_exceptions();
 
