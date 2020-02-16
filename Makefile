@@ -11,7 +11,8 @@ LINKER    = build-tools/bin/x86_64-elf-gcc
 
 #Compiler flags
 CXXFLAGS = -ffreestanding -O2 -mno-red-zone -fno-exceptions \
-            -fno-rtti -mcmodel=large -masm=intel
+            -fno-rtti -mcmodel=large -masm=intel \
+			-Wall -Wextra -Wpedantic -Wnon-virtual-dtor
 #Assembler flags
 ASFLAGS = -f elf64 -w+orphan-labels
 #Linker flags
