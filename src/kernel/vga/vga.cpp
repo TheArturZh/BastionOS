@@ -13,7 +13,7 @@ void vga::put_character(unsigned char color, unsigned char character, unsigned s
 }
 
 void vga::scroll(unsigned int lines){
-	for(int done = 0; done < lines; done++){
+	for(unsigned int done = 0; done < lines; done++){
 		uint16_t* pos = (uint16_t*) VGA_MEM_ADDR;
 		int char_to_move = VGA_WIDTH * (VGA_HEIGHT - 1);
 
