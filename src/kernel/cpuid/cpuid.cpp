@@ -47,17 +47,8 @@ cpuid::cpu_version_info_struct cpuid::processor_version_information(){
 	int cpuid_result[4];
 	call(0, 0, cpuid_result);
 
-	//Why I can't just reinterpret it? PepeHands
-	return cpu_version_info_struct {
-		cpuid_result[0],
-		cpuid_result[0] >> 4,
-		cpuid_result[0] >> 8,
-		cpuid_result[0] >> 12,
-		0,
-		cpuid_result[0] >> 16,
-		cpuid_result[0] >> 20,
-		0
-	};
+	// 100% safe
+	return *(cpu_version_info_struct*)&cpuid_result[0];
 }
 
 cpuid::enum_processor_types cpuid::processor_type(){
